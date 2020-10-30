@@ -1,0 +1,8 @@
+{
+  "short_name": "KFMDM Album generator",
+  "name": "KFMDM Album Generator",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
