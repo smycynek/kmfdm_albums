@@ -27,6 +27,7 @@ const App = () => {
   const black = '#000000';
   const randomColors = [red, gold, orange, green, teal, purple];
 
+  const [customWord, setCustomWord] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
   const [color, setColor] = useState(red);
@@ -39,6 +40,17 @@ const App = () => {
   };
   const newImageIndex = () => {
     setImageIndex(randomRange(imageComponents.length));
+  };
+
+  const onChangeCustomWord = (e) => {
+    if (e.target.value.length < 11) {
+      setCustomWord(e.target.value);
+      alphabet[0] = e.target.value;
+      setWordIndex(0);
+    }
+    if (e.target.value.length === 0) {
+      newWordIndex();
+    }
   };
 
   const saveImage = () => {
@@ -180,8 +192,12 @@ const App = () => {
               onClick={() => setTextColor(white)}
               className="ColorChoice white"
             />
-          </div>
 
+          </div>
+          <span><strong>Custom</strong></span>
+          <div>
+              <input value={alphabet[0]} onChange={onChangeCustomWord} />
+            </div>
         </div>
         <p>
           As many people know, the greatest band to ever live, is, of course,
