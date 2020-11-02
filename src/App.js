@@ -179,7 +179,7 @@ const App = () => {
             />
             <button
               type="button"
-              onClick={() => setColor(purple)}
+              onClick={() => setTextColor(purple)}
               className="ColorChoice purple"
             />
             <button
