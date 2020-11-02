@@ -9,11 +9,19 @@
 
 }
 
+body {
+  background-color: lightgrey;
+  margin:0px;
+  padding:0px;
+}
+
 span,p {
+  margin:.2em;
   font-family: sans-serif;
 }
 
 .Banner {
+  margin:.2em;
   font-size: 2em;
   font-family: haettenschweilerregular, Impact, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat",
   "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
@@ -40,13 +48,9 @@ span,p {
   margin-bottom:0.15em;
 }
 
-body {
-  background-color: lightgrey;
-}
+
 
 .MainApp {
-  margin:.5em;
-  padding: .05em;
   background-color:lightgrey;
 }
 
@@ -60,6 +64,7 @@ body {
   text-align: center;
   align-content: center;
   align-items: center;
+
 }
 
 .Controls {
