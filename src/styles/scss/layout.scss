@@ -6,7 +6,7 @@
        url('../../fonts/haettenschweiler-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-
+  font-display: swap;
 }
 
 body {
@@ -15,14 +15,19 @@ body {
   padding:0px;
 }
 
-span,p {
+span{
   margin:.2em;
+  font-family: sans-serif;
+}
+
+p{
+  margin:.5em;
   font-family: sans-serif;
 }
 
 .Banner {
   margin:.2em;
-  font-size: 2em;
+  font-size: 2.5em;
   font-family: haettenschweilerregular, Impact, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat",
   "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
 }
@@ -55,6 +60,9 @@ span,p {
 }
 
 .OuterBox {
+  border-style: solid;
+  border-color: white;
+  border-width:5px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -68,7 +76,7 @@ span,p {
 }
 
 .Controls {
-  margin:1em;
+  margin:.5em;
   display: grid;
   grid-gap: 5px;
   grid-template-columns: auto auto;
@@ -155,7 +163,7 @@ $black: #000000;
 .blackStyle {
   background-color: black;
   color: $orange;
-
+  margin: .5em;
   font-size: 2em;
   font-family: haettenschweilerregular, Impact, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat",
   "Bitstream Vera Sans Bold", "Arial Black", sans-serif;

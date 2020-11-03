@@ -106,3 +106,5 @@ dist
 upload.sh
 kmfdm/
 build/
+.vscode/
+.DS-Store

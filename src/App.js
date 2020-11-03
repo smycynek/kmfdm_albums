@@ -4,13 +4,9 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import html2canvas from 'html2canvas';
-import download from 'downloadjs';
-
-import {
-  BrowserView,
-} from 'react-device-detect';
-
+import domtoimage from 'dom-to-image';
+import { saveAs } from 'file-saver';
+import { BrowserView } from 'react-device-detect';
 import './styles/scss/layout.scss';
 import alphabet from './alphabet.json';
 import imageComponents from './images/scaledImageComponents';
@@ -27,10 +23,12 @@ const App = () => {
   const black = '#000000';
   const randomColors = [red, gold, orange, green, teal, purple];
 
+  // eslint-disable-next-line no-unused-vars
   const [customWord, setCustomWord] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [imageIndex, setImageIndex] = useState(0);
-  const [color, setColor] = useState(red);
+  const [backgroundColor, setBackgroundColor] = useState(red);
+  const [fillColor, setFillColor] = useState(white);
   const [textColor, setTextColor] = useState(gold);
 
   const randomRange = (length) => Math.floor(Math.random() * Math.floor(length));
@@ -39,7 +37,12 @@ const App = () => {
     setWordIndex(randomRange(alphabet.length));
   };
   const newImageIndex = () => {
-    setImageIndex(randomRange(imageComponents.length));
+    setImageIndex((prev) => {
+      if (prev + 1 < imageComponents.length) {
+        return prev + 1;
+      }
+      return 0;
+    });
   };
 
   const onChangeCustomWord = (e) => {
@@ -54,16 +57,16 @@ const App = () => {
   };
 
   const saveImage = () => {
-    html2canvas(document.getElementById('main')).then((canvas) => {
-      const image = canvas.toDataURL('image/png');
-      download(image, `download_${alphabet[wordIndex]}_${imageIndex}.png`);
-    });
+    domtoimage.toPng(document.getElementById('main'))
+      .then((blob) => {
+        saveAs(blob, `download_${alphabet[wordIndex]}_${imageIndex}.png`);
+      });
   };
 
   useEffect(() => {
     setImageIndex(randomRange(imageComponents.length));
     setWordIndex(randomRange(alphabet.length));
-    setColor(randomColors[randomRange(randomColors.length)]);
+    setBackgroundColor(randomColors[randomRange(randomColors.length)]);
     setTextColor(randomColors[randomRange(randomColors.length)]);
   }, []);
 
@@ -72,9 +75,7 @@ const App = () => {
   return (
     <>
       <div className="MainApp">
-        <h1 className="Banner">
-          KMFDM album generator
-        </h1>
+        <h1 className="Banner">KMFDM album generator</h1>
         <p>
           <strong>Click</strong>
           {' '}
@@ -94,63 +95,117 @@ const App = () => {
             <h1 className="Main">KMFDM</h1>
 
             <MyImage
-              style={{ backgroundColor: color, margin: '.5em' }}
+              style={{ backgroundColor, margin: '.5em' }}
               id="theImage"
               onClick={newImageIndex}
-              fillColor={white}
+              fillColor={fillColor}
             />
 
-            <h1 onClick={newWordIndex} style={{ color: textColor }} className="Title">
+            <h1
+              onClick={newWordIndex}
+              style={{ color: textColor }}
+              className="Title"
+            >
               {alphabet[wordIndex].toUpperCase()}
             </h1>
           </div>
-
         </div>
         <div className="Controls">
-          <span><strong>Image</strong></span>
+          <span>
+            <strong>Backdrop</strong>
+          </span>
           <div className="ButtonWrapper">
             <button
               type="button"
-              onClick={() => setColor(red)}
+              onClick={() => setBackgroundColor(red)}
               className="ColorChoice red"
             />
             <button
               type="button"
-              onClick={() => setColor(gold)}
+              onClick={() => setBackgroundColor(gold)}
               className="ColorChoice gold"
             />
             <button
               type="button"
-              onClick={() => setColor(orange)}
+              onClick={() => setBackgroundColor(orange)}
               className="ColorChoice orange"
             />
             <button
               type="button"
-              onClick={() => setColor(green)}
+              onClick={() => setBackgroundColor(green)}
               className="ColorChoice green"
             />
             <button
               type="button"
-              onClick={() => setColor(teal)}
+              onClick={() => setBackgroundColor(teal)}
               className="ColorChoice teal"
             />
             <button
               type="button"
-              onClick={() => setColor(purple)}
+              onClick={() => setBackgroundColor(purple)}
               className="ColorChoice purple"
             />
             <button
               type="button"
-              onClick={() => setColor(silver)}
+              onClick={() => setBackgroundColor(silver)}
               className="ColorChoice silver"
             />
             <button
               type="button"
-              onClick={() => setColor(black)}
+              onClick={() => setBackgroundColor(black)}
               className="ColorChoice black"
             />
           </div>
-          <span><strong>Text</strong></span>
+
+          <span>
+            <strong>Fill</strong>
+          </span>
+          <div className="ButtonWrapper">
+            <button
+              type="button"
+              onClick={() => setFillColor(red)}
+              className="ColorChoice red"
+            />
+            <button
+              type="button"
+              onClick={() => setFillColor(gold)}
+              className="ColorChoice gold"
+            />
+            <button
+              type="button"
+              onClick={() => setFillColor(orange)}
+              className="ColorChoice orange"
+            />
+            <button
+              type="button"
+              onClick={() => setFillColor(green)}
+              className="ColorChoice green"
+            />
+            <button
+              type="button"
+              onClick={() => setFillColor(teal)}
+              className="ColorChoice teal"
+            />
+            <button
+              type="button"
+              onClick={() => setFillColor(purple)}
+              className="ColorChoice purple"
+            />
+            <button
+              type="button"
+              onClick={() => setFillColor(silver)}
+              className="ColorChoice silver"
+            />
+            <button
+              type="button"
+              onClick={() => setFillColor(white)}
+              className="ColorChoice white"
+            />
+          </div>
+
+          <span>
+            <strong>Text</strong>
+          </span>
           <div className="ButtonWrapper">
             <button
               type="button"
@@ -192,48 +247,50 @@ const App = () => {
               onClick={() => setTextColor(white)}
               className="ColorChoice white"
             />
-
           </div>
-          <span><strong>Custom</strong></span>
+          <span>
+            <strong>Custom</strong>
+          </span>
           <div>
-              <input value={alphabet[0]} onChange={onChangeCustomWord} />
-            </div>
+            <input value={alphabet[0]} onChange={onChangeCustomWord} />
+          </div>
         </div>
         <p>
           As many people know, the greatest band to ever live, is, of course,
           {' '}
-          {' '}
           <a href="https://kmfdm.net/">KMFDM</a>
-          .  If you know KFMDM, you know their albums have a very specific
-          style -- so, have some fun creating your own!
+          . If you know KFMDM, you know
+          their albums have a very specific style -- so, have some fun creating
+          your own!
         </p>
         <BrowserView>
-          <button
-            type="button"
-            className="blackStyle"
-            onClick={saveImage}
-          >
+          <button type="button" className="blackStyle" onClick={saveImage}>
             DOWNLOAD
           </button>
         </BrowserView>
         <hr />
 
-
         <cite>
           <p>
-          <a href="https://github.com/smycynek/kmfdm_albums">
-          https://github.com/smycynek/kmfdm_albums
-          </a>
+            <a href="https://github.com/smycynek/kmfdm_albums">
+              https://github.com/smycynek/kmfdm_albums
+            </a>
           </p>
           <p>
-
-          Icons made by
-          {' '}
-          <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a>
-          {' '}
-          from
-          {' '}
-          <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+            Icons made by
+            {' '}
+            <a
+              href="https://www.flaticon.com/authors/dave-gandy"
+              title="Dave Gandy"
+            >
+              Dave Gandy
+            </a>
+            {' '}
+            from
+            {' '}
+            <a href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com
+            </a>
           </p>
         </cite>
       </div>
