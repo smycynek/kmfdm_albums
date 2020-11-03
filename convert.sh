@@ -1,0 +1,1 @@
+for f in *.svg; do npx svgr "$f" --out-dir ./out; done

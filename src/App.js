@@ -277,20 +277,41 @@ const App = () => {
             </a>
           </p>
           <p>
-            Icons made by
+            Icons from
             {' '}
-            <a
-              href="https://www.flaticon.com/authors/dave-gandy"
-              title="Dave Gandy"
-            >
-              Dave Gandy
-            </a>
+            <a href="https://www.flaticon.com">FlatIcon.com</a>
             {' '}
-            from
-            {' '}
-            <a href="https://www.flaticon.com/" title="Flaticon">
-              www.flaticon.com
-            </a>
+            by:
+
+            <ul>
+
+              <li>
+                <a
+                  href="https://www.flaticon.com/authors/dave-gandy"
+                  title="Dave Gandy"
+                >
+                  Dave Gandy
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://www.flaticon.com/authors/vitaly-gorbachev"
+                  title="Vitaly Gorbachev"
+                >
+                  Vitaly Gorbachev
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://www.flaticon.com/authors/dinosoftlabs"
+                  title="DinosoftLabs"
+                >
+                  DinosoftLabs
+                </a>
+              </li>
+            </ul>
           </p>
         </cite>
       </div>
